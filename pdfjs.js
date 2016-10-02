@@ -65,6 +65,7 @@ function runPdfJS() {
 
   // Wait for everything to complete.
   PdfJS_window.flushTimeouts();
+  canvas_logs.length = 0;
 }
 
 function tearDownPdfJS() {
