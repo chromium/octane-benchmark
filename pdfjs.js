@@ -43,6 +43,7 @@ function setupPdfJS() {
 }
 
 function runPdfJS() {
+  canvas_logs.length = 0;
   PDFJS.getDocument(pdf_file).then(function(pdf) {
     var canvas = PdfJS_window.document.getElementById('canvas');
     var context = canvas.getContext('2d');
