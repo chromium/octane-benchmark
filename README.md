@@ -8,9 +8,11 @@ Please note that [Octane is retired](https://v8project.blogspot.com/2017/04/reti
 
 For more information, check out the [homepage](https://developers.google.com/octane/), [benchmark reference](https://developers.google.com/octane/benchmark), or [FAQ](https://developers.google.com/octane/faq).
 
-# New UI Added
-![new UI](img/iphone-octane-1.png)
+## New UI Added
 
 [Run Octane 2 with new UI!](https://mohan-chinnappan-n2.github.io/2019/lex/octane/octane2.html)
+
+![new UI](img/iphone-octane-1.png)
+
 
 
