@@ -7,3 +7,6 @@ Please note that [Octane is retired](https://v8project.blogspot.com/2017/04/reti
 [Run Octane 2 now!](http://chromium.github.io/octane/)
 
 For more information, check out the [homepage](https://developers.google.com/octane/), [benchmark reference](https://developers.google.com/octane/benchmark), or [FAQ](https://developers.google.com/octane/faq).
+
+# New UI Added
+![new UI](img/macOS-1.png)
