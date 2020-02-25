@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help</title>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.bundle.js"
+        integrity="sha256-Z1t+wxZ7Eh5T1sK6aePWMhEQOghR4jZVLwjwrUZAReE=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha256-L/W5Wfqfa0sdBNIKN9cG6QA5F2qx4qICmU2VgLruv9Y=" crossorigin="anonymous" />
+        <link rel="icon" type="image/x-icon" href="https://mohan-chinnappan-n2.github.io/favicon.ico">
+
+
+
+    <link href="css/app.css" rel="stylesheet">
+</head>
+<body>
+
+
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-info">
+        <a class="navbar-brand cap-it" href="#">Octane 2.0 </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+            aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item ">
+                    <a class="nav-link" href="octane2.html">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="help.html">Help</a>
+                  </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class='container top-margin-80'>
+
+        <div class="card" style="width: 100%">
+            <div class="card-body">
+              <h5 class="card-title"><b>How the Octane score is arrived?</b></h5>
+
+              <p>
+                Octane 2.0 consists of <b>17 tests</b>, 4 more than Octane v1. 
+                We have chosen each test in order to cover most use cases encountered in the <b>real web</b> <br>
+
+                We believe a high-performance JavaScript engine should be able to perform well on real-world code,
+                 not just synthetic benchmarks. That is how the 4 new tests, have been selected:
+
+                 <ul class="list-group">
+                    <li class="list-group-item">NavierStoke </li> 
+                    <li class="list-group-item">SplayLatency </li> 
+                    <li class="list-group-item">zlib </li> 
+                    <li class="list-group-item">TypeScript </li> 
+                
+                </ul>
+
+
+              </p>
+            </div>
+          </div>
+          <br/>
+          <div class="jumbotron">
+            <h5>Geometric Mean</h4>
+            <p class="lead">
+                The final score is the <a href="https://en.wikipedia.org/wiki/Geometric_mean#Properties">geometric mean</a>
+                of the
+                single scores. 
+               <br> 
+                <button class='btn btn-info'>
+                    We suggest you to restart the browser before repeating the test.
+                </button>             
+      
+            </p>
+            <hr class="my-4">
+       
+          </div>
+
+          <h3 class='underline  '>Sample Scores</h3>
+
+         <h5>macOS</h5>
+          <img src="img/macOS-1.png" alt='macOS-1' width="100%"/>
+          <hr>
+          <h5>iPhone 8 Plus</h5>
+          <img src="img/iphone-octane-1.png" alt='iphone-1' width="50%"/>
+
+
+          <script src="https://cdn.jsdelivr.net/npm/vega@5.9.1"></script>
+            <script src="https://cdn.jsdelivr.net/npm/vega-lite@4.4.0"></script>
+            <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.2.2"></script>
+
+            <h3 class='underline'>Sample Graph for the Octane Score</h3>
+            <div id="vis"></div>
+
+            <script>
+
+               // graph spec
+               let spec =  {
+                    "$schema": "https://vega.github.io/schema/vega/v5.json",
+                    "width": 1200,
+                    "height": 400,
+                    "padding": 5,
+                  
+                    "data": [
+                      {
+                        "name": "table",
+                        "values":[
+                      {
+                          "category": "Richards",
+                          "amount": 26487
+                      },
+                      {
+                          "category": "DeltaBlue",
+                          "amount": 61953
+                      },
+                      {
+                          "category": "Crypto",
+                          "amount": 35051
+                      },
+                      {
+                          "category": "RayTrace",
+                          "amount": 57275
+                      },
+                      {
+                          "category": "EarleyBoyer",
+                          "amount": 49824
+                      },
+                      {
+                          "category": "RegExp",
+                          "amount": 5983
+                      },
+                      {
+                          "category": "Splay",
+                          "amount": 3618
+                      },
+                      {
+                          "category": "SplayLatency",
+                          "amount": 1363
+                      },
+                      {
+                          "category": "NavierStokes",
+                          "amount": 38139
+                      },
+                      {
+                          "category": "PdfJS",
+                          "amount": 25143
+                      },
+                      {
+                          "category": "Mandreel",
+                          "amount": 29879
+                      },
+                      {
+                          "category": "MandreelLatency",
+                          "amount": 35609
+                      },
+                      {
+                          "category": "Gameboy",
+                          "amount": 36767
+                      },
+                      {
+                          "category": "CodeLoad",
+                          "amount": 25500
+                      },
+                      {
+                          "category": "Box2D",
+                          "amount": 57899
+                      },
+                      {
+                          "category": "zlib",
+                          "amount": 69970
+                      },
+                      {
+                          "category": "Typescript",
+                          "amount": 43907
+                      }
+                  ]
+                      }
+                    ],
+                  
+                    "signals": [
+                      {
+                        "name": "tooltip",
+                        "value": {},
+                        "on": [
+                          {"events": "rect:mouseover", "update": "datum"},
+                          {"events": "rect:mouseout",  "update": "{}"}
+                        ]
+                      }
+                    ],
+                  
+                    "scales": [
+                      {
+                        "name": "xscale",
+                        "type": "band",
+                        "domain": {"data": "table", "field": "category"},
+                        "range": "width",
+                        "padding": 0.05,
+                        "round": true
+                      },
+                      {
+                        "name": "yscale",
+                        "domain": {"data": "table", "field": "amount"},
+                        "nice": true,
+                        "range": "height"
+                      }
+                    ],
+                  
+                    "axes": [
+                      { "orient": "bottom", "scale": "xscale" },
+                      { "orient": "left", "scale": "yscale" }
+                    ],
+                  
+                    "marks": [
+                      {
+                        "type": "rect",
+                        "from": {"data":"table"},
+                        "encode": {
+                          "enter": {
+                            "x": {"scale": "xscale", "field": "category"},
+                            "width": {"scale": "xscale", "band": 1},
+                            "y": {"scale": "yscale", "field": "amount"},
+                            "y2": {"scale": "yscale", "value": 0}
+                          },
+                          "update": {
+                            "fill": {"value": "steelblue"}
+                          },
+                          "hover": {
+                            "fill": {"value": "red"}
+                          }
+                        }
+                      },
+                      {
+                        "type": "text",
+                        "encode": {
+                          "enter": {
+                            "align": {"value": "center"},
+                            "baseline": {"value": "bottom"},
+                            "fill": {"value": "#333"}
+                          },
+                          "update": {
+                            "x": {"scale": "xscale", "signal": "tooltip.category", "band": 0.5},
+                            "y": {"scale": "yscale", "signal": "tooltip.amount", "offset": -2},
+                            "text": {"signal": "tooltip.amount"},
+                            "fillOpacity": [
+                              {"test": "datum === tooltip", "value": 0},
+                              {"value": 1}
+                            ]
+                          }
+                        }
+                      }
+                    ]
+                  };
+                
+                  vegaEmbed('#vis', spec);
+
+                  
+            </script>
+
+
+
+
+
+    </div>
+
+
+</body>
+</html>
