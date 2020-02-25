@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<!-- Copyright 2013 the V8 project authors. Scroll to the end for full license -->
+<html lang="en">
+
+<head>
+    <meta http-equiv="X-UA-Compatible" value="IE=edge" />
+    <meta charset="utf-8" />
+    <title>Octane 2.0 JavaScript Benchmark</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Script-Type" content="text/javascript">
+    <meta name="description" content="Octane 2.0 JavaScript Benchmark - the Javascript benchmark for the modern web">
+    <meta name="author" content="Octane Team Google and Mohan Chinnappan">
+    <!-- twitter bootstrap code -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.bundle.js"
+        integrity="sha256-Z1t+wxZ7Eh5T1sK6aePWMhEQOghR4jZVLwjwrUZAReE=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha256-L/W5Wfqfa0sdBNIKN9cG6QA5F2qx4qICmU2VgLruv9Y=" crossorigin="anonymous" />
+    <!-- Octane benchmark code -->
+    <script type="text/javascript" src="https://chromium.github.io/octane/base.js"></script>
+    <script type="text/javascript" src="https://chromium.github.io/octane/richards.js"></script>
+    <script type="text/javascript" src="https://chromium.github.io/octane/deltablue.js"></script>
+    <script type="text/javascript" src="https://chromium.github.io/octane/crypto.js"></script>
+    <script type="text/javascript" src="https://chromium.github.io/octane/raytrace.js"></script>
+    <script type="text/javascript" src="https://chromium.github.io/octane/earley-boyer.js"></script>
+    <script type="text/javascript" src="https://chromium.github.io/octane/regexp.js"></script>
+    <script type="text/javascript" src="https://chromium.github.io/octane/splay.js"></script>
+    <script type="text/javascript" src="https://chromium.github.io/octane/navier-stokes.js"></script>
+    <script type="text/javascript" src="https://chromium.github.io/octane/pdfjs.js"></script>
+    <script type="text/javascript" src="https://chromium.github.io/octane/mandreel.js"></script>
+    <script type="text/javascript" src="https://chromium.github.io/octane/gbemu-part1.js"></script>
+    <script type="text/javascript" src="https://chromium.github.io/octane/gbemu-part2.js"></script>
+    <script type="text/javascript" src="https://chromium.github.io/octane/code-load.js"></script>
+    <script type="text/javascript" src="https://chromium.github.io/octane/box2d.js"></script>
+    <script type="text/javascript" src="https://chromium.github.io/octane/zlib.js"></script>
+    <script type="text/javascript" src="https://chromium.github.io/octane/zlib-data.js"></script>
+    <script type="text/javascript" src="https://chromium.github.io/octane/typescript.js"></script>
+    <script type="text/javascript" src="https://chromium.github.io/octane/typescript-input.js"></script>
+    <script type="text/javascript" src="https://chromium.github.io/octane/typescript-compiler.js"></script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/vega@5.9.1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@4.4.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.2.2"></script>
+
+
+
+
+    <script type="text/javascript" src="js/app.js"></script>
+
+
+    <link href="css/app.css" rel="stylesheet">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="https://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+    <!-- Le fav and touch icons -->
+
+    <link rel="icon" type="image/x-icon" href="https://mohan-chinnappan-n2.github.io/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="ico/apple-touch-icon-57-precomposed.png">
+</head>
+
+<body onLoad="Load()">
+
+
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-info">
+        <a class="navbar-brand cap-it" href="#">Octane 2.0 Benchmark </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+            aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="octane2.html">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="help.html">Help</a>
+                  </li>
+            </ul>
+        </div>
+    </nav>
+
+
+
+    <div class="container">
+
+
+
+
+        <div class="alert" style="display:none" id="alertbox">
+            <strong>Warning</strong> This JavaScript engine does not support Typed Arrays. You might want to run the <a
+                href="https://v8.googlecode.com/svn/data/benchmarks/v7/run.html">V8 benchmark v7</a> instead.
+        </div>
+        <div id="main-container">
+            <a id="run-octane" href="javascript:Run()">
+                <div class="hero-unit" id="inside-anchor">
+                    <button class='btn btn-lg btn-primary' 
+                       title="Octane Score"
+                   id="main-banner">Start Octane 2.0</button>
+                   <div id='o-spinner' class="spinner-border hidden text-info"></div>
+                   <br>
+                    <div class="progress">
+                        <div class="progress-bar bg-info progress-bar-striped progress-bar-animated" id='score-progress' role="progressbar" style="width: 0%" 
+                        aria-valuenow="0"
+                         aria-valuemin="0" 
+                         aria-valuemax="100"></div>
+                      </div>
+                    <br>
+                     <div id="vis"></div>
+                    <textarea  name="score" class="no-display form-control code-ta" id="finalScore" cols="100" rows="17"></textarea>
+                </div>
+            </a>
+
+        
+        </div>
+
+
+        <div class="alert alert-info hidden" role="alert" id='webGL'>WebGL </div>
+        <div class="card hidden" id='ua-card'>
+            <div class="card-body" id='userAgent'>
+            </div>
+        </div>
+
+        <button class='btn btn-danger hidden' id='runFPS'>Find FPS</button>
+        <div class="alert alert-info hidden" role="alert" id='fps'> </div>
+        <div class="alert alert-primary hidden"  role="alert" id='mem-info'></div>
+
+
+
+
+       
+
+        <div class="content">
+
+            <h4 class='cap-it'>Core Language Features</h4>
+
+            <div class="row">
+                <div class="col">
+                    <div id="Box-Richards" style="visibility: hidden;">
+                        <a href="https://developers.google.com/octane/benchmark#richards" target="_blank"
+                            class='btn btn-primary cap-it'>Richards </a>
+                        <span class="btn btn-info" id="Result-Richards">...</span>
+                        <ul class='list-group'>
+                            <li class="list-group-item list-group-item-info">OS kernel simulation benchmark,
+                                originally written in BCPL by
+                                <a target="_blank" href='http://www.cl.cam.ac.uk/~mr10/'>Martin Richards</a> (539
+                                lines).</li>
+                            <li class='list-group-item'>property load/store, function/method calls</li>
+                            <li class='list-group-item'> code optimization, elimination of redundant code</li>
+                        </ul>
+
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div id="Box-DeltaBlue" style="visibility: hidden;">
+                        <a href="https://developers.google.com/octane/benchmark#deltablue" target="_blank"
+                            class='btn btn-primary cap-it'>Deltablue </a>
+                        <span class="btn btn-info" id="Result-DeltaBlue">...</span>
+
+                        <ul class='list-group'>
+                            <li class="list-group-item list-group-item-info">One-way
+                                <a target='_blank'
+                                    href='http://www.cs.washington.edu/research/constraints/deltablue/'>constraint
+                                    solver</a>,
+                                originally written in Smalltalk by John Maloney and Mario Wolczko (880 lines).
+                            </li>
+                            <li class='list-group-item'>polymorphism</li>
+                            <li class='list-group-item'> OO-style programming</li>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <div id="Box-RayTrace" style="visibility: hidden;">
+                        <a href="https://developers.google.com/octane/benchmark#raytrace" target="_blank"
+                            class='btn btn-primary cap-it'>Raytrace</a>
+                        <span class="btn btn-info" id="Result-RayTrace">...</span>
+                        <ul class='list-group'>
+                            <li class="list-group-item list-group-item-info">Ray tracer benchmark based on code by
+                                <a target='_blank' href='http://flog.co.nz/'>Adam Burmister</a> (904 lines).</li>
+                            <li class='list-group-item'>argument object, apply</li>
+                            <li class='list-group-item'> prototype library object, creation patter</li>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+
+            <h4 class='cap-it'>Bit Operations</h4>
+            <div class="row">
+                <div class="col">
+                    <div id="Box-Crypto" style="visibility: hidden;">
+                        <a href="https://developers.google.com/octane/benchmark#crypto" target="_blank"
+                            class='btn btn-primary'>Crypto </a>
+                        <span id="Result-Crypto" class="btn btn-info">...</span>
+                        <ul class='list-group'>
+                            <li class="list-group-item list-group-item-info">Encryption and decryption benchmark based
+                                on code by Tom Wu (1698 lines).
+                            </li>
+                            <li class='list-group-item'>bit operations</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div id="Box-Box2D" style="visibility: hidden;">
+                        <a href="https://developers.google.com/octane/benchmark#box2d" target="_blank"
+                            class='btn btn-primary'>Box2DWeb</a>
+                        <span class="btn btn-info" id="Result-Box2D">...</span>
+
+                        <ul class='list-group'>
+                            <li class="list-group-item list-group-item-info">
+                                Based on
+                                <a target='_blank' href='http://code.google.com/p/box2dweb/'>Box2DWeb</a>,
+                                the popular 2D physics engine originally written by Erin Catto, ported to JavaScript.
+                                (560 lines, 9000+ de-minified)
+                            </li>
+                            <li class='list-group-item'>floating point math</li>
+                            <li class='list-group-item'>properties containing doubles, accessor properties</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+            <h4 class='cap-it'>Memory and Garbage Collection</h4>
+            <div class="row">
+                <div class="col">
+                    <div id="Box-EarleyBoyer" style="visibility: hidden;">
+                        <a href="https://developers.google.com/octane/benchmark#earleyboyer" target="_blank"
+                            class='btn btn-primary'>EarleyBoyer</a>
+                        <span class="btn btn-info" id="Result-EarleyBoyer">...</span>
+                        <ul class='list-group'>
+
+                            <li class="list-group-item list-group-item-info">
+                                Classic Scheme benchmarks, translated to JavaScript by Florian Loitsch's Scheme2Js
+                                compiler (4684 lines).
+
+                            </li>
+
+                            <li class='list-group-item'>fast object creation, destruction</li>
+                            <li class='list-group-item'>closures, arguments object</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div id="Box-Splay" style="visibility: hidden;">
+                        <a href="https://developers.google.com/octane/benchmark#splay" target="_blank"
+                            class='btn btn-primary'>Splay</a>
+                        <span class="btn btn-info" id="Result-Splay">...</span>
+                        <ul class='list-group'>
+                            <li class="list-group-item list-group-item-info">
+                                Data manipulation benchmark that deals with splay trees and exercises the automatic
+                                memory management subsystem (394 lines)
+                            </li>
+                            <li class='list-group-item'>fast object creation, destruction</li>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class='row'>
+                <div class="col">
+                    <div id="Box-SplayLatency" style="visibility: hidden;">
+                        <a href="https://developers.google.com/octane/benchmark#splaylatency" target="_blank"
+                            class='btn btn-primary'>SplayLatency</a>
+                        <span class="btn btn-info" id="Result-SplayLatency">...</span>
+                        <ul class='list-group'>
+                            <li class="list-group-item list-group-item-info">
+                                The Splay test stresses the Garbage Collection subsystem of a VM. SplayLatency
+                                instruments the existing Splay code with frequent measurement checkpoints.
+                                A long pause between checkpoints is an indication of high latency in the GC.
+                                This test measures the frequency of latency pauses,
+                                classifies them into buckets and penalizes frequent long pauses with a low score.
+                            </li>
+                            <li class='list-group-item'>garbage Collection latency</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+
+            <h4 class='cap-it'>Strings and Arrays</h4>
+
+            <div class='row'>
+                <div class="col">
+                    <div id="Box-RegExp" style="visibility: hidden;">
+                        <a href="https://developers.google.com/octane/benchmark#splaylatency" target="_blank"
+                            class='btn btn-primary'>RegExp</a>
+                        <span class="btn btn-info" id="Result-RegExp">...</span>
+                        <ul class='list-group'>
+                            <li class="list-group-item list-group-item-info">
+                                Regular expression benchmark generated by extracting regular expression operations
+                                from 50 of the most popular web pages (1761 lines).
+                            </li>
+                            <li class='list-group-item'>Regular Expressions</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div id="Box-NavierStokes" style="visibility: hidden;">
+                        <a href="https://developers.google.com/octane/benchmark#navierstokes" target="_blank"
+                            class='btn btn-primary'>NavierStokes</a>
+                        <span class="btn btn-info" id="Result-NavierStokes">...</span>
+                        <ul class='list-group'>
+                            <li class="list-group-item list-group-item-info">
+                                2D NavierStokes equations solver, heavily manipulates double precision arrays.
+                                Based on Oliver Hunt's code (387 lines).
+
+                            </li>
+                            <li class='list-group-item'>reading and writing numeric array</li>
+                            <li class='list-group-item'> floating point math</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class='row'>
+                <div class="col">
+                    <div id="Box-PdfJS" style="visibility: hidden;">
+                        <a href="https://developers.google.com/octane/benchmark#pdfjs" target="_blank"
+                            class='btn btn-primary'>pdf.js</a>
+                        <span class="btn btn-info" id="Result-PdfJS">...</span>
+                        <ul class='list-group'>
+
+                            <li class="list-group-item list-group-item-info">
+                                Mozilla's
+                                <a target='_blank' href='http://mozilla.github.com/pdf.js/'>PDF Reader</a>,
+                                implemented in JavaScript. It measures decoding and interpretation time (33,056 lines).
+                            </li>
+                            <li class='list-group-item'>array and typed arrays manipulations</li>
+                            <li class='list-group-item'>math and bit operations, support for future language features
+                                (e.g. promises)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+
+            <h4 class='cap-it'>Virtual Machine</h4>
+
+            <div class="row">
+                <div class="col">
+                    <div id="Box-Mandreel" style="visibility: hidden;">
+                        <a href="https://developers.google.com/octane/benchmark#mandreel" target="_blank"
+                            class='btn btn-primary'>Mandreel</a>
+                        <span class="btn btn-info" id="Result-Mandreel">...</span>
+                        <ul class='list-group'>
+
+                            <li class="list-group-item list-group-item-info">
+                                Runs the
+                                <a target='_blank' href='http://bulletphysics.org/wordpress/'>3D Bullet Physics
+                                    Engine</a>,
+                                ported from C++ to JavaScript via
+                                <a target='_blank' href='http://www.mandreel.com/'>Mandreel </a> (277,377 lines)
+                            </li>
+
+                            <li class='list-group-item'>emulation</li>
+                        </ul>
+
+                    </div>
+                </div>
+
+
+                <div class="col">
+                    <div id="Box-Gameboy" style="visibility: hidden;">
+                        <a href="https://developers.google.com/octane/benchmark#gameboyemulator" target="_blank"
+                            class='btn btn-primary'>GameBoy Emulator</a>
+                        <span class="btn btn-info" id="Result-Gameboy">...</span>
+                        <ul class='list-group'>
+                            <li class="list-group-item list-group-item-info">
+                                Emulates the portable console's architecture and runs a demanding 3D simulation, all in
+                                JavaScript (11,097 lines).
+
+
+                            </li>
+                            <li class='list-group-item'>emulation</li>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col">
+                    <div id="Box-Typescript" style="visibility: hidden;">
+                        <a href="https://developers.google.com/octane/benchmark#typescript" target="_blank"
+                            class='btn btn-primary'>Typescript</a>
+                        <span class="btn btn-info" id="Result-Typescript">...</span>
+                        <ul class='list-group'>
+
+                            <li class="list-group-item list-group-item-info">
+                                <a target='_blank' href='http://www.typescriptlang.org/'>Microsoft's TypeScript</a>,
+                                compiler is a complex application. This test measures the time TypeScript takes
+                                to compile itself and is a proxy of how well a VM handles complex and sizable
+                                Javascript applications (25,918 lines).
+                            </li>
+
+                            <li class='list-group-item'>run complex, heavy applications</li>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <h4 class='cap-it'>Compiler</h4>
+
+            <div class="row">
+                <div class="col">
+                    <div id="Box-MandreelLatency" style="visibility: hidden;">
+                        <a href="https://developers.google.com/octane/benchmark#mandreellatency" target="_blank"
+                            class='btn btn-primary'>MandreelLatency</a>
+                        <span class="btn btn-info" id="Result-MandreelLatency">...</span>
+                        <ul class='list-group'>
+
+                            <li class="list-group-item list-group-item-info">
+                                Similar to the SplayLatency test, this test instruments the Mandreel benchmark with
+                                frequent time
+                                measurement checkpoints. Since Mandreel stresses the VM's compiler,
+                                this test provides an indication of the latency introduced by the compiler.
+                                <i>ong pauses between measurement checkpoints lower the final score</i>.
+
+                            </li>
+                            <li class='list-group-item'>compiler latency</li>
+                        </ul>
+                    </div>
+                </div>
+
+
+                <div class="col">
+                    <div id="Box-CodeLoad" style="visibility: hidden;">
+                        <a href="https://developers.google.com/octane/benchmark#codeload" target="_blank"
+                            class='btn btn-primary'>CodeLoad</a>
+                        <span class="btn btn-info" id="Result-CodeLoad">...</span>
+                        <ul class='list-group'>
+
+                            <li class="list-group-item list-group-item-info">
+                                Measures how quickly a JavaScript engine can start executing code after loading a large
+                                JavaScript program,
+                                social widget being a
+                                common example.
+                                The source for this test is derived from open source libraries (
+                                <a target='_blank' href='https://developers.google.com/closure/'>Closure</a>,
+                                <a target='_blank' href='http://jquery.com/'>jQuery</a>) (1,530 lines).
+
+                            </li>
+
+                            <li class='list-group-item'>javaScript parsing and compilation</li>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <div class="box" id="Box-zlib" style="visibility: hidden;">
+                        <a href="https://developers.google.com/octane/benchmark#zlib" target="_blank"
+                            class='btn btn-primary'>zlib</a>
+                        <span class="btn btn-info" id="Result-zlib">...</span>
+
+                        <ul class='list-group'>
+
+                            <li class="list-group-item list-group-item-info">
+                                The <a href='https://github.com/kripken/emscripten/tree/master/tests/zlib'
+                                    target='_blank'>
+                                    zlib</a> asm.js/Emscripten test from the Mozilla
+                                <a target='_blank' href='https://github.com/kripken/emscripten'>Emscripten</a> suite,
+                                running with workload 1.
+                                The code is enclosed in eval(), that guarantees that the running time
+                                we measure includes parsing and compilation on all browsers (2,585 lines).
+
+                            </li>
+
+
+                            <li class='list-group-item'>code compilation and execution</li>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- /content -->
+
+        
+
+    </div>
+    <!-- /container -->
+
+    <footer class="footer">
+        <div class="container">
+          <span class="text-muted">Octane2 Score</span>
+        </div>
+      </footer>
+
+
+
+</body>
+
+</html>
+
+<!--
+// Copyright 2013 the V8 project authors (https://code.google.com/p/v8/). 
+// All rights reserved.
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//     * Redistributions of source code must retain the above copyright
+//       notice, this list of conditions and the following disclaimer.
+//     * Redistributions in binary form must reproduce the above
+//       copyright notice, this list of conditions and the following
+//       disclaimer in the documentation and/or other materials provided
+//       with the distribution.
+//     * Neither the name of Google Inc. nor the names of its
+//       contributors may be used to endorse or promote products derived
+//       from this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+
+// Modifications: Mohan Chinnappan
+-->
