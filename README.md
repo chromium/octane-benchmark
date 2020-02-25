@@ -10,3 +10,7 @@ For more information, check out the [homepage](https://developers.google.com/oct
 
 # New UI Added
 ![new UI](img/iphone-octane-1.png)
+
+[Run Octane 2 with new UI!](https://mohan-chinnappan-n2.github.io/2019/lex/octane/octane2.html)
+
+
